@@ -1,8 +1,3 @@
-.. image:: https://api.cirrus-ci.com/github/spesmilo/electrumx.svg?branch=master
-    :target: https://cirrus-ci.com/github/spesmilo/electrumx
-.. image:: https://coveralls.io/repos/github/spesmilo/electrumx/badge.svg
-    :target: https://coveralls.io/github/spesmilo/electrumx
-
 ===============================================
 ElectrumX - Reimplementation of electrum-server
 ===============================================
@@ -22,6 +17,7 @@ Electrum server network runs ElectrumX.
 
 Documentation
 =============
+Fast setup `Setup <https://github.com/bitweb-project/electrumx/blob/master/docs/HowToSetup.rst>`_.
 
 See `readthedocs <https://electrumx-spesmilo.readthedocs.io/>`_.
 
