@@ -35,8 +35,8 @@ classifiers = [
 dynamic = ['version']
 
 [project.urls]
-Homepage = "https://github.com/bewcore-project/electrumx"
-Repository = "https://github.com/bewcore-project/electrumx"
+Homepage = "https://github.com/bitweb-project/electrumx"
+Repository = "https://github.com/bitweb-project/electrumx"
 
 [project.scripts]
 electrumx_server = "electrumx.cli.electrumx_server:main"

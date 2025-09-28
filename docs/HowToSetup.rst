@@ -7,11 +7,7 @@ Prepare::
 
   apt-get update && apt-get upgrade
 
-  apt-get install python3-setuptools python3-multidict python3.8 python3.8-dev libleveldb-dev python3-setuptools python3-multidict gcc g++ libsnappy-dev zlib1g-dev libbz2-dev libgflags-dev build-essential python3-pip git
-
-  python3.8 -m pip install aiohttp pylru plyvel Cython uvloop quark_hash bitweb_yespower==1.0.5
-
-  important after enable GPU algo , use version bitweb_yespower==1.0.5 ( YescryptR16 )
+  apt install -y python3.12 python3.12-venv python3.12-dev python3-pip python3-setuptools python3-multidict libleveldb-dev gcc g++ libsnappy-dev zlib1g-dev libbz2-dev libgflags-dev build-essential git
 
   git clone https://github.com/bitweb-project/electrumx /opt/electrumx
   
@@ -30,8 +26,6 @@ Prepare::
   chown electrumx:electrumx /opt/electrumx/db
 
   cp contrib/systemd/electrumx.service /etc/systemd/system/
-
-  ln -sf /opt/electrumx/electrumx_server.py /usr/local/bin/electrumx_server.py
 
   ln -sf /opt/electrumx/electrumx.conf /etc/electrumx.conf
 
@@ -77,7 +71,10 @@ Give access to config::
 
 Install server::
 
-  python3.8 setup.py install
+  python3.12 -m venv /opt/electrumx/venv
+  source /opt/electrumx/venv/bin/activate
+  pip install --upgrade pip setuptools wheel
+  pip install .
 
 
 Start::

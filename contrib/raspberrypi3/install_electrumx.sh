@@ -22,6 +22,6 @@ sudo apt-get install git
 sudo pip3 install plyvel
 
 # install electrumx
-git clone https://github.com/bewcore-project/electrumx.git
+git clone https://github.com/bitweb-project/electrumx.git
 cd electrumx
 sudo python3 -m pip install .
