@@ -1,14 +1,18 @@
 [Unit]
-Description=Electrumx
+Description=ElectrumX server
 After=network.target
 
 [Service]
-EnvironmentFile=/etc/electrumx.conf
-ExecStart=/usr/local/bin/electrumx_server
-ExecStop=/usr/local/bin/electrumx_rpc -p 8000 stop
 User=electrumx
+Group=electrumx
+WorkingDirectory=/opt/electrumx
+EnvironmentFile=/etc/electrumx.conf
+ExecStart=/opt/electrumx/venv/bin/electrumx_server
+ExecStop=/opt/electrumx/venv/bin/electrumx_rpc -p 8000 stop
+Environment="PATH=/opt/electrumx/venv/bin:/usr/bin:/bin"
 LimitNOFILE=8192
 TimeoutStopSec=30min
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

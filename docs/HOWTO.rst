@@ -15,17 +15,16 @@ small - pull requests are welcome.
 ================ ========================
 Package          Notes
 ================ ========================
-Python3          ElectrumX uses asyncio.  Python version >= 3.8 is
+Python3          ElectrumX uses asyncio.  Python version >= 3.10 is
                  **required**.
 `aiohttp`_       Python library for asynchronous HTTP.  Version >=
                  2.0 required.
-`pylru`_         Python LRU cache package.
 DB Engine        A database engine package is required; two are
                  supported (see `Database Engine`_ below).
 ================ ========================
 
 Some coins need an additional package, typically for their block hash
-functions. For example, `x11_hash`_ is required for DASH. Scrypt coins
+functions. For example, `dash_hash`_ is required for DASH. Scrypt coins
 require a Python interpreter compiled and/or linked with OpenSSL 1.1.0
 or higher.
 
@@ -71,7 +70,7 @@ You will need to install one of:
 
 + `plyvel <https://plyvel.readthedocs.io/en/latest/installation.html>`_ for LevelDB.
 
-  Included as part of a regular pip or ``setup.py`` installation of ElectrumX.
+  Included as part of a regular pip installation of ElectrumX.
 + `python-rocksdb <https://pypi.python.org/pypi/python-rocksdb>`_ for RocksDB
 
   ``pip3 install python-rocksdb`` or use the rocksdb extra install option to ElectrumX.
@@ -95,9 +94,9 @@ There are many extra Python dependencies available to fit the needs of your
 system or coins. For example, to install the RocksDB dependencies and a faster
 JSON parsing library::
 
-    pip3 install .[rocksdb,ujson]
+    pip3 install ".[rocksdb,ujson]"
 
-see setup.py's ``extra_requires`` for a complete list.
+see pyproject.toml's ``project.optional-dependencies`` for a complete list.
 
 You can also run the code from the source tree or a copy of it.
 
@@ -443,7 +442,6 @@ You can then set the port as follows and advertise the service externally on the
 .. _`daemontools`: http://cr.yp.to/daemontools.html
 .. _`runit`: http://smarden.org/runit/index.html
 .. _`aiohttp`: https://pypi.python.org/pypi/aiohttp
-.. _`pylru`: https://pypi.python.org/pypi/pylru
-.. _`x11_hash`: https://pypi.python.org/pypi/x11_hash
+.. _`dash_hash`: https://pypi.python.org/pypi/dash_hash
 .. _`contrib/raspberrypi3/install_electrumx.sh`: https://github.com/spesmilo/electrumx/blob/master/contrib/raspberrypi3/install_electrumx.sh
 .. _`contrib/raspberrypi3/run_electrumx.sh`: https://github.com/spesmilo/electrumx/blob/master/contrib/raspberrypi3/run_electrumx.sh
