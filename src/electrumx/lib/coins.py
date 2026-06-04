@@ -3805,3 +3805,39 @@ class FerriteTestnet(Ferrite):
         'enode2.ferritecoin.org s t',
         'enode3.ferritecoin.org s t',
     ]
+
+
+class Bitweb(Coin):
+    NAME = "Bitweb"
+    SHORTNAME = "BTE"
+    NET = "mainnet"
+    P2PKH_VERBYTE = bytes.fromhex("21")
+    P2SH_VERBYTES = (bytes.fromhex("1E"),)
+    GENESIS_HASH = ('111692c1b9b390c407ab74d7f924d4fa'
+                    '0f7589974ab61af96392feca11f209e6')
+    DESERIALIZER = lib_tx.DeserializerSegWit
+    TX_COUNT = 1
+    TX_COUNT_HEIGHT = 1
+    TX_PER_BLOCK = 1
+    RPC_PORT = 26332
+    REORG_LIMIT = 800
+    ESTIMATE_FEE = 0.00001
+    RELAY_FEE = 0.00001
+
+
+class Dpowcoin(Coin):
+    NAME = "Dpowcoin"
+    SHORTNAME = "DPC"
+    NET = "mainnet"
+    P2PKH_VERBYTE = bytes.fromhex("37")
+    P2SH_VERBYTES = (bytes.fromhex("1C"),)
+    GENESIS_HASH = ('d86f8a0582e779830f182befeaaabc8c'
+                    '73a159b6b06530910758daf17ce31e36')
+    DESERIALIZER = lib_tx.DeserializerSegWit
+    TX_COUNT = 214273
+    TX_COUNT_HEIGHT = 203221
+    TX_PER_BLOCK = 2
+    RPC_PORT = 42002
+    REORG_LIMIT = 800
+    ESTIMATE_FEE = 0.00001
+    RELAY_FEE = 0.00001
