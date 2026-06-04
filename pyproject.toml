@@ -17,6 +17,7 @@ dependencies = [
     "aiorpcx[ws]>=0.25.0,<0.26",
     "plyvel",  # TODO rm from default install before 2.0 release
     "aiohttp>=3.3,<4",
+    "uvloop",
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
