@@ -2,10 +2,17 @@
  ChangeLog
 ===========
 
-Version 2.0 (not yet released)
+Version 2.0.0 (03 July 2026)
 ==============================
 
-TODO expand
+TL;DR:
+
+- new DB schema, so you need to rebuild from scratch. No more "DB::flush_count overflow".
+- Bitcoin Core >=31 is now required, with `txospenderindex=1`
+- added support for Electrum Protocol 1.7
+- running with free-threaded CPython is now (experimentally) supported, and is much faster
+
+-----
 
 * Breaking changes to on-disk database. Server operators need to manually delete old DB,
   no migration path. New DB will be rebuilt while rescanning again from genesis.
@@ -14,31 +21,31 @@ TODO expand
      no more "DB::flush_count overflow" (`spesmilo/electrumx#88`_)
    - the size of the new DB is comparable to the old one, however:
 
-* We now require Bitcoin Core to have `txospenderindex=1` (added in Bitcoin Core 31)
-  in addition to `txindex=1`.  This is needed to serve the `blockchain.outpoint.subscribe` RPC
+* We now require Bitcoin Core to have :code:`txospenderindex=1` (added in Bitcoin Core 31)
+  in addition to :code:`txindex=1`.  This is needed to serve the :code:`blockchain.outpoint.subscribe` RPC
   added in Electrum Protocol 1.7.
 
   For reference, on Bitcoin mainnet around height=950k,
 
    - the ElectrumX db uses around 122 GiB (using LevelDB, roughly same for both of e-x 1.x and 2.0),
       - note: using RocksDB 9, it is a bit smaller, around 106 GiB
-   - `.bitcoin/blocks/` uses 788 GiB,
-   - `.bitcoin/chainstate/` uses 12 GiB,
-   - `.bitcoin/indexes/txindex/` uses 66 GiB,
-   - `.bitcoin/indexes/txospenderindex/` uses 88 GiB (new!)
+   - :code:`.bitcoin/blocks/` uses 788 GiB,
+   - :code:`.bitcoin/chainstate/` uses 12 GiB,
+   - :code:`.bitcoin/indexes/txindex/` uses 66 GiB,
+   - :code:`.bitcoin/indexes/txospenderindex/` uses 88 GiB (new!)
 
-  - This also means that we now require Bitcoin Core 31.0 or newer (for `COIN=Bitcoin`).
+  - This also means that we now require Bitcoin Core 31.0 or newer (for :code:`COIN=Bitcoin`).
 
-* env: the previously optional envvar `DB_ENGINE`, is now mandatory.
+* env: the previously optional envvar :code:`DB_ENGINE`, is now mandatory.
 
-  - choose either `leveldb` or `rocksdb`
+  - choose either :code:`leveldb` or :code:`rocksdb`
   - in ElectrumX 1.x versions, the default was leveldb.
 
-  You need to install the appropriate dependencies for your engine, see the `[leveldb]` and
-  `[rocksdb]` pip extras and the "Database Engine" section of the HOWTO.
+  You need to install the appropriate dependencies for your engine, see the :code:`[leveldb]` and
+  :code:`[rocksdb]` pip extras and the "Database Engine" section of the HOWTO.
 
   Previously RocksDB was difficult to use as the python bindings for it have been unmaintained for years.
-  By the super-slop-powers of LLMs, we revived the python bindings as `rocksdb-ng` and made it compatible with modern
+  By the super-slop-powers of LLMs, we revived the python bindings as :code:`rocksdb-ng` and made it compatible with modern
   cpython, cython, and rocksdb. The changes are reviewable and not really slop. (see `spesmilo/electrumx#347`_)
   rocksdb-ng (starting with version 2.3) is also compatible with `free-threaded python`_, see "performance" section.
 
@@ -50,7 +57,7 @@ TODO expand
 
    - the BlockProcessor is now massively multi-threaded, both inside a single block and across a span of blocks.
      This can mainly only be taken advantage of if the GIL (Global Interpreter Lock) is disabled, that is,
-     when using a `free-threaded python`_ interpreter: e.g. cpython `3.14t`, compiled with `--disable-gil`.
+     when using a `free-threaded python`_ interpreter: e.g. cpython :code:`3.14t`, compiled with :code:`--disable-gil`.
      On a decent modern machine with a multi-core CPU, this has been measured to cut initial sync time
      from genesis to a bit less than half. OTOH, much more RAM is required for the parallel processing
      (example: approx 2 GB when syncing with GIL, 8 GB when syncing without GIL).
@@ -60,12 +67,24 @@ TODO expand
 
    - for more details, see `spesmilo/electrumx#369`_
 
+   - the (block)Prefetcher and the Mempool code are now partially event-based (but still also polling):
+     e.g. a mempool update is triggered as soon as processing a new block begins (and part of the work
+     is done concurrently)
+
+   - json (de)serialization can now optionally use the Rust-based
+     :code:`orjson` library (via the :code:`orjson` pip extra), replacing the
+     previous :code:`ujson` and :code:`rapidjson` extras.
+
+* Dockerfiles: the existing Dockerfile was updated and cleaned up a bit, and it serves
+  as a simple minimal example to show how to run ElectrumX. There is now also a second Dockerfile
+  that sets up a free-threaded python for a beefy server to utilise the above-mentioned performance gains.
+  See them in :code:`contrib/`. (also see the new runtime logline "Python GIL enabled" to verify effect)
+
 * protocol:
    - new: implement electrum protocol version 1.7  (`spesmilo/electrum-protocol#2`_).
      The min supported protocol version remains 1.4, the max is now 1.7.
-* performance: json (de)serialization can now optionally use the Rust-based
-  :code:`orjson` library (via the :code:`orjson` pip extra), replacing the
-  previous :code:`ujson` and :code:`rapidjson` extras.
+
+* LocalRPC: new command: "inspect_session"  (`spesmilo/electrumx#361`_).
 
 
 Version 1.20.0 (03 June 2026)
@@ -386,6 +405,7 @@ This fork maintained by:
 .. _spesmilo/electrumx#349:  https://github.com/spesmilo/electrumx/pull/349
 .. _spesmilo/electrumx#351:  https://github.com/spesmilo/electrumx/pull/351
 .. _spesmilo/electrumx#352:  https://github.com/spesmilo/electrumx/pull/352
+.. _spesmilo/electrumx#361:  https://github.com/spesmilo/electrumx/pull/361
 .. _spesmilo/electrumx#369:  https://github.com/spesmilo/electrumx/pull/369
 
 
