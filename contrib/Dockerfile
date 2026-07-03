@@ -22,8 +22,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install ElectrumX
-#ARG ELECTRUMX_VERSION=1.20.0
-ARG ELECTRUMX_VERSION=b8f6e227f251fe5cba96b940ffaa094439636417
+ARG ELECTRUMX_VERSION=2.0.0
+#ARG ELECTRUMX_VERSION=b8f6e227f251fe5cba96b940ffaa094439636417
 RUN python -m venv venv \
     && venv/bin/pip install --no-cache-dir \
         "e_x[rocksdb] @ git+https://github.com/spesmilo/electrumx.git@${ELECTRUMX_VERSION}"

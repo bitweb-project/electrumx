@@ -6,6 +6,6 @@ from electrumx.server.env import Env
 
 
 BRANDING = "spesmilo"
-__version__ = "2.0b2"
+__version__ = "2.0.0"
 version = f'ElectrumX {__version__}'
 version_short = __version__
