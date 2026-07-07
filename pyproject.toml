@@ -16,6 +16,8 @@ requires-python = ">=3.10"
 dependencies = [
     "aiorpcx[ws]>=0.25.0,<0.26",
     "aiohttp>=3.3,<4",
+    "uvloop",
+    "rocksdb-ng",
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

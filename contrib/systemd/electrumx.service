@@ -3,9 +3,13 @@ Description=Electrumx
 After=network.target
 
 [Service]
+User=electrumx
+Group=electrumx
+WorkingDirectory=/opt/electrumx
 EnvironmentFile=/etc/electrumx.conf
-ExecStart=/usr/local/bin/electrumx_server
-ExecStop=/usr/local/bin/electrumx_rpc -p 8000 stop
+ExecStart=/opt/electrumx/venv/bin/electrumx_server
+ExecStop=/opt/electrumx/venv/bin/electrumx_rpc -p 8000 stop
+Environment="PATH=/opt/electrumx/venv/bin:/usr/bin:/bin"
 User=electrumx
 LimitNOFILE=8192
 TimeoutStopSec=30min
